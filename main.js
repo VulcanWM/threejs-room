@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { VRButton } from 'three/addons/webxr/VRButton.js';
 
 // create scene
 const scene = new THREE.Scene();
@@ -11,8 +12,10 @@ camera.position.z = 5;
 
 // create renderer
 const renderer = new THREE.WebGLRenderer();
+renderer.xr.enabled = true;
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
+document.body.appendChild( VRButton.createButton( renderer ) );
 renderer.domElement.style.cursor = 'pointer';
 
 // create wall 1
@@ -73,5 +76,11 @@ function animate() {
     renderer.render( scene, camera );
 
 }
+
+renderer.setAnimationLoop( function () {
+
+	renderer.render( scene, camera );
+
+} );
 
 animate();
